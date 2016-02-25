@@ -1,0 +1,49 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+using MessagingToolkit;
+using MessagingToolkit.QRCode.Codec;
+using MessagingToolkit.QRCode.Codec.Data;
+using MiniForms.Properties;
+
+namespace MiniForms.Modules.QRcode
+{
+
+    public partial class DiaQRcode : Form
+    {
+        public string URL { get; set; }
+        public Image QrImage { get; set; }
+
+
+        public DiaQRcode()
+        {
+            InitializeComponent();
+        }
+
+        private void btnCreate_Click(object sender, EventArgs e)
+        {
+            URL = txtURL.Text;
+            QRCodeEncoder encoder = new QRCodeEncoder();
+            Bitmap qrcode = encoder.Encode(URL);
+            pbQRcode.Image = qrcode;
+            QrImage = pbQRcode.Image;
+        }
+
+        private void DiaQRcode_Load(object sender, EventArgs e)
+        {
+            txtURL.Text = URL;
+        }
+
+        private void btnOk_Click(object sender, EventArgs e)
+        {
+            DialogResult = DialogResult.OK;
+
+        }
+    }
+}

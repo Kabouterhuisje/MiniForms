@@ -1,0 +1,210 @@
+diff --git a/MiniForms/VoiceRec/diaVoiceRec.cs b/MiniForms/VoiceRec/diaVoiceRec.cs
+--- a/MiniForms/VoiceRec/diaVoiceRec.cs
++++ b/MiniForms/VoiceRec/diaVoiceRec.cs
+@@ -10,6 +10,7 @@
+ using System.Text;
+ using System.Threading.Tasks;
+ using System.Windows.Forms;
++using MiniForms.Properties;
+ 
+ namespace MiniForms.VoiceRec
+ {
+@@ -13,7 +14,7 @@
+ 
+ namespace MiniForms.VoiceRec
+ {
+-    public partial class diaVoiceRec : Form
++    public partial class DiaVoiceRec : Form
+     {
+         readonly SpeechRecognitionEngine _recognizer = new SpeechRecognitionEngine();
+         SpeechSynthesizer Monica = new SpeechSynthesizer();
+@@ -23,7 +24,7 @@
+         String greetChoice;
+         public bool StartSpeaking = false;
+ 
+-        public diaVoiceRec()
++        public DiaVoiceRec()
+         {
+             InitializeComponent();
+             _recognizer.SetInputToDefaultAudioDevice();
+@@ -34,8 +35,9 @@
+ 
+         private void ExportMode(object sender, SpeechRecognizedEventArgs e)
+         {
+-            var lines = File.ReadAllText(@"C:\Users\Dennis\Desktop\Output\test.txt");
+-            var tw = new StreamWriter(@"C:\Users\Dennis\Desktop\Output\test.txt");
++            var path = Settings.Default.DefaultOutputFolder;
++            var lines = File.ReadAllText(path + "test.txt");
++            var tw = new StreamWriter(path + "test.txt");
+             var input = e.Result.Text;
+             tw.WriteLine(lines + input);
+             Console.WriteLine(input);
+diff --git a/MiniForms/VoiceRec/diaVoiceRec.Designer.cs b/MiniForms/VoiceRec/diaVoiceRec.Designer.cs
+--- a/MiniForms/VoiceRec/diaVoiceRec.Designer.cs
++++ b/MiniForms/VoiceRec/diaVoiceRec.Designer.cs
+@@ -1,6 +1,6 @@
+ ﻿namespace MiniForms.VoiceRec
+ {
+-    partial class diaVoiceRec
++    partial class DiaVoiceRec
+     {
+         /// <summary>
+         /// Required designer variable.
+@@ -85,7 +85,7 @@
+             this.lbCommands.Size = new System.Drawing.Size(237, 329);
+             this.lbCommands.TabIndex = 4;
+             // 
+-            // diaVoiceRec
++            // DiaVoiceRec
+             // 
+             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+@@ -95,8 +95,8 @@
+             this.Controls.Add(this.btnStart);
+             this.Controls.Add(this.btnRead);
+             this.Controls.Add(this.txtInput);
+-            this.Name = "diaVoiceRec";
+-            this.Text = "diaVoiceRec";
++            this.Name = "DiaVoiceRec";
++            this.Text = "DiaVoiceRec";
+             this.ResumeLayout(false);
+             this.PerformLayout();
+ 
+diff --git a/MiniForms/VoiceRec/VoiceRecognition.cs b/MiniForms/VoiceRec/VoiceRecognition.cs
+--- a/MiniForms/VoiceRec/VoiceRecognition.cs
++++ b/MiniForms/VoiceRec/VoiceRecognition.cs
+@@ -21,7 +21,7 @@
+ 
+         public void EditModule()
+         {
+-            diaVoiceRec v = new diaVoiceRec();
++            var v = new DiaVoiceRec();
+             v.Show();     
+         }
+ 
+diff --git a/MiniForms/MiniForms.csproj b/MiniForms/MiniForms.csproj
+--- a/MiniForms/MiniForms.csproj
++++ b/MiniForms/MiniForms.csproj
+@@ -32,6 +32,9 @@
+     <WarningLevel>4</WarningLevel>
+   </PropertyGroup>
+   <ItemGroup>
++    <Reference Include="Gma.QrCodeNet.Encoding">
++      <HintPath>..\packages\QrCodeNet.0.3\lib\Gma.QrCodeNet.Encoding.dll</HintPath>
++    </Reference>
+     <Reference Include="MessagingToolkit.QRCode">
+       <HintPath>..\packages\MessagingToolkit.QRCode.1.3.0\lib\MessagingToolkit.QRCode.dll</HintPath>
+     </Reference>
+@@ -65,7 +68,6 @@
+     <Compile Include="Modules\FileIn\DiaFileIn.Designer.cs">
+       <DependentUpon>DiaFileIn.cs</DependentUpon>
+     </Compile>
+-    <Compile Include="Modules\Qrcode\diaQRcode.cs">
+     <Compile Include="Modules\FileOut\DiaFileOut.cs">
+       <SubType>Form</SubType>
+     </Compile>
+@@ -69,12 +71,6 @@
+     <Compile Include="Modules\FileOut\DiaFileOut.cs">
+       <SubType>Form</SubType>
+     </Compile>
+-    <Compile Include="Modules\Qrcode\diaQRcode.Designer.cs">
+-      <DependentUpon>diaQRcode.cs</DependentUpon>
+-    </Compile>
+-    <Compile Include="Modules\Qrcode\QRcode.cs" />
+-      <SubType>Form</SubType>
+-    </Compile>
+     <Compile Include="Modules\FileOut\DiaFileOut.Designer.cs">
+       <DependentUpon>DiaFileOut.cs</DependentUpon>
+     </Compile>
+@@ -85,6 +81,14 @@
+       <DependentUpon>DiaNetworkIn.cs</DependentUpon>
+     </Compile>
+     <Compile Include="Modules\NetworkIn\NetworkIn.cs" />
++    <Compile Include="Modules\QRcode\DiaQRcode.cs">
++      <SubType>Form</SubType>
++    </Compile>
++    <Compile Include="Modules\QRcode\DiaQRcode.Designer.cs">
++      <DependentUpon>DiaQRcode.cs</DependentUpon>
++    </Compile>
++    <Compile Include="Modules\QRcode\QRcode.cs" />
++    <Compile Include="Modules\QRcode\QrCodeModule.cs" />
+     <Compile Include="Modules\StringReplacer\DiaStringReplacer.cs">
+       <SubType>Form</SubType>
+     </Compile>
+@@ -114,6 +118,13 @@
+     <Compile Include="UnitTest\SettingsTest.cs" />
+     <Compile Include="UnitTest\TestCase.cs" />
+     <Compile Include="Utils\FileNameUtils.cs" />
++    <Compile Include="VoiceRec\DiaVoiceRec.cs">
++      <SubType>Form</SubType>
++    </Compile>
++    <Compile Include="VoiceRec\DiaVoiceRec.Designer.cs">
++      <DependentUpon>DiaVoiceRec.cs</DependentUpon>
++    </Compile>
++    <Compile Include="VoiceRec\VoiceRecognition.cs" />
+     <EmbeddedResource Include="Modules\FileIn\DiaFileIn.resx">
+       <DependentUpon>DiaFileIn.cs</DependentUpon>
+     </EmbeddedResource>
+@@ -117,17 +128,6 @@
+     <EmbeddedResource Include="Modules\FileIn\DiaFileIn.resx">
+       <DependentUpon>DiaFileIn.cs</DependentUpon>
+     </EmbeddedResource>
+-    <Compile Include="VoiceRec\diaVoiceRec.cs">
+-      <SubType>Form</SubType>
+-    </Compile>
+-    <Compile Include="VoiceRec\diaVoiceRec.Designer.cs">
+-      <DependentUpon>diaVoiceRec.cs</DependentUpon>
+-    </Compile>
+-    <Compile Include="VoiceRec\VoiceRecognition.cs" />
+-    </EmbeddedResource>
+-    <EmbeddedResource Include="Modules\QRcode\diaQRcode.resx">
+-      <DependentUpon>diaQRcode.cs</DependentUpon>
+-    </EmbeddedResource>
+     <EmbeddedResource Include="Modules\Email\diaEmail.resx">
+       <DependentUpon>diaEmail.cs</DependentUpon>
+     </EmbeddedResource>
+@@ -137,6 +137,9 @@
+     <EmbeddedResource Include="Modules\NetworkIn\DiaNetworkIn.resx">
+       <DependentUpon>DiaNetworkIn.cs</DependentUpon>
+     </EmbeddedResource>
++    <EmbeddedResource Include="Modules\QRcode\DiaQRcode.resx">
++      <DependentUpon>DiaQRcode.cs</DependentUpon>
++    </EmbeddedResource>
+     <EmbeddedResource Include="Modules\StringReplacer\DiaStringReplacer.resx">
+       <DependentUpon>DiaStringReplacer.cs</DependentUpon>
+     </EmbeddedResource>
+@@ -152,8 +155,8 @@
+       <AutoGen>True</AutoGen>
+       <DependentUpon>Resources.resx</DependentUpon>
+     </Compile>
+-    <EmbeddedResource Include="VoiceRec\diaVoiceRec.resx">
+-      <DependentUpon>diaVoiceRec.cs</DependentUpon>
++    <EmbeddedResource Include="VoiceRec\DiaVoiceRec.resx">
++      <DependentUpon>DiaVoiceRec.cs</DependentUpon>
+     </EmbeddedResource>
+     <None Include="packages.config" />
+     <None Include="Properties\Settings.settings">
+@@ -165,7 +168,8 @@
+       <DependentUpon>Settings.settings</DependentUpon>
+       <DesignTimeSharedInput>True</DesignTimeSharedInput>
+     </Compile>
++    <None Include="Scripts\jquery-2.1.1.min.map" />
+   </ItemGroup>
+   <ItemGroup>
+     <None Include="App.config" />
+   </ItemGroup>
+@@ -168,8 +172,13 @@
+   </ItemGroup>
+   <ItemGroup>
+     <None Include="App.config" />
+   </ItemGroup>
+-  <ItemGroup />
++  <ItemGroup>
++    <Content Include="Scripts\jquery-2.1.1.intellisense.js" />
++    <Content Include="Scripts\jquery-2.1.1.js" />
++    <Content Include="Scripts\jquery-2.1.1.min.js" />
++    <Content Include="Scripts\nugetexample.js" />
++  </ItemGroup>
+   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+        Other similar extension points exist, see Microsoft.Common.targets.

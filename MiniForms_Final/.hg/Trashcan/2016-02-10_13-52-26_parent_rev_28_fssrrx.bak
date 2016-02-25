@@ -1,0 +1,30 @@
+diff --git a/MiniForms.sln b/MiniForms.sln
+--- a/MiniForms.sln
++++ b/MiniForms.sln
+@@ -1,6 +1,6 @@
+ ﻿
+ Microsoft Visual Studio Solution File, Format Version 12.00
+ # Visual Studio 2013
+-VisualStudioVersion = 12.0.21005.1
++VisualStudioVersion = 12.0.31101.0
+ MinimumVisualStudioVersion = 10.0.40219.1
+ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MiniForms", "MiniForms\MiniForms.csproj", "{3D6E72FA-C55E-4338-93AB-48C252B08324}"
+@@ -5,4 +5,8 @@
+ MinimumVisualStudioVersion = 10.0.40219.1
+ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MiniForms", "MiniForms\MiniForms.csproj", "{3D6E72FA-C55E-4338-93AB-48C252B08324}"
++	GlobalSection(HgVSProperties) = preSolution
++		SolutionIsControlled = True
++		SolutionBindings = <Solution Location In Database>
++	EndGlobalSection
+ EndProject
+ Global
+@@ -7,5 +11,9 @@
+ EndProject
+ Global
++	GlobalSection(HgVSProperties) = preSolution
++		SolutionIsControlled = True
++		SolutionBindings = <Solution Location In Database>
++	EndGlobalSection
+ 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+ 		Debug|Any CPU = Debug|Any CPU
+ 		Release|Any CPU = Release|Any CPU

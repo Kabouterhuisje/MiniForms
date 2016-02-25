@@ -1,0 +1,156 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{3D6E72FA-C55E-4338-93AB-48C252B08324}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>MiniForms</RootNamespace>
+    <AssemblyName>MiniForms</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Gma.QrCodeNet.Encoding">
+      <HintPath>..\packages\QrCodeNet.0.3\lib\Gma.QrCodeNet.Encoding.dll</HintPath>
+    </Reference>
+    <Reference Include="MessagingToolkit.QRCode">
+      <HintPath>..\packages\MessagingToolkit.QRCode.1.3.0\lib\MessagingToolkit.QRCode.dll</HintPath>
+    </Reference>
+    <Reference Include="nunit.framework">
+      <HintPath>..\packages\NUnit.3.0.1\lib\net45\nunit.framework.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Speech" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Modules\Email\Email.cs" />
+    <Compile Include="Modules\FileIn\diaSelectFolder.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Modules\FileIn\diaSelectFolder.Designer.cs">
+      <DependentUpon>diaSelectFolder.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\Qrcode\diaQRcode.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Modules\Qrcode\diaQRcode.Designer.cs">
+      <DependentUpon>diaQRcode.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\Qrcode\QRcode.cs" />
+    <Compile Include="Modules\StringReplacer\diaStringReplacer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Modules\StringReplacer\diaStringReplacer.Designer.cs">
+      <DependentUpon>diaStringReplacer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\ModuleDetail.cs" />
+    <Compile Include="Modules\VoiceRec\diaVoiceRec.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Modules\VoiceRec\diaVoiceRec.Designer.cs">
+      <DependentUpon>diaVoiceRec.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\VoiceRec\VoiceRecognition.cs" />
+    <Compile Include="Process\ProcessRunner.cs" />
+    <Compile Include="Process\ProcessInstance.cs" />
+    <Compile Include="MainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainForm.Designer.cs">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Interfaces\IModule.cs" />
+    <Compile Include="Interfaces\IModuleDetail.cs" />
+    <Compile Include="Modules\StringReplacer\StringReplacer.cs" />
+    <Compile Include="Modules\FileOut\FileOut.cs" />
+    <Compile Include="Modules\FileIn\FileIn.cs" />
+    <Compile Include="ModuleLoader\HardCodeLoader.cs" />
+    <Compile Include="Interfaces\IModuleLoader.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UnitTest\TestCase.cs" />
+    <EmbeddedResource Include="Modules\FileIn\diaSelectFolder.resx">
+      <DependentUpon>diaSelectFolder.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Modules\QRcode\diaQRcode.resx">
+      <DependentUpon>diaQRcode.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Modules\StringReplacer\diaStringReplacer.resx">
+      <DependentUpon>diaStringReplacer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainForm.resx">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Modules\VoiceRec\DiaVoiceRec.resx">
+      <DependentUpon>diaVoiceRec.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <None Include="Scripts\jquery-2.1.1.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Scripts\jquery-2.1.1.intellisense.js" />
+    <Content Include="Scripts\jquery-2.1.1.js" />
+    <Content Include="Scripts\jquery-2.1.1.min.js" />
+    <Content Include="Scripts\nugetexample.js" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

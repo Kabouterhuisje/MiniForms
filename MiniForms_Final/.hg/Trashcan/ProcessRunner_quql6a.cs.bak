@@ -1,0 +1,30 @@
+using System;
+using System.Collections.Generic;
+using System.IO;
+using MiniForms.Interfaces;
+
+namespace MiniForms.Process
+{
+    class ProcessRunner
+    {
+
+        private readonly List<IModule> _stepsList;
+
+        public ProcessRunner(List<IModule> stepsList)
+        {
+            _stepsList = stepsList;
+        }
+
+        public void Start()
+        {
+            ProcessInstance instance = new ProcessInstance(Directory.CreateDirectory(@"C:\Users\Dennis\Desktop\ProcessRunner\" + Guid.NewGuid()));
+            foreach (var module in _stepsList)
+            {
+                module.Run(instance);
+
+            }
+            instance.CleanUp();
+        }
+    }
+
+}

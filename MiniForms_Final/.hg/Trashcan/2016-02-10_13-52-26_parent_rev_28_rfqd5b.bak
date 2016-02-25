@@ -1,0 +1,137 @@
+diff --git a/MiniForms/MiniForms.csproj b/MiniForms/MiniForms.csproj
+--- a/MiniForms/MiniForms.csproj
++++ b/MiniForms/MiniForms.csproj
+@@ -40,6 +40,7 @@
+     </Reference>
+     <Reference Include="System" />
+     <Reference Include="System.Core" />
++    <Reference Include="System.Speech" />
+     <Reference Include="System.Xml.Linq" />
+     <Reference Include="System.Data.DataSetExtensions" />
+     <Reference Include="Microsoft.CSharp" />
+@@ -64,7 +65,6 @@
+       <DependentUpon>diaQRcode.cs</DependentUpon>
+     </Compile>
+     <Compile Include="Modules\Qrcode\QRcode.cs" />
+-    <Compile Include="Modules\Qrcode\QrCodeModule.cs" />
+     <Compile Include="Modules\StringReplacer\diaStringReplacer.cs">
+       <SubType>Form</SubType>
+     </Compile>
+@@ -90,6 +90,13 @@
+     <Compile Include="Program.cs" />
+     <Compile Include="Properties\AssemblyInfo.cs" />
+     <Compile Include="UnitTest\TestCase.cs" />
++    <Compile Include="VoiceRec\diaVoiceRec.cs">
++      <SubType>Form</SubType>
++    </Compile>
++    <Compile Include="VoiceRec\diaVoiceRec.Designer.cs">
++      <DependentUpon>diaVoiceRec.cs</DependentUpon>
++    </Compile>
++    <Compile Include="VoiceRec\VoiceRecognition.cs" />
+     <EmbeddedResource Include="Modules\FileIn\diaSelectFolder.resx">
+       <DependentUpon>diaSelectFolder.cs</DependentUpon>
+     </EmbeddedResource>
+@@ -111,6 +118,9 @@
+       <AutoGen>True</AutoGen>
+       <DependentUpon>Resources.resx</DependentUpon>
+     </Compile>
++    <EmbeddedResource Include="VoiceRec\diaVoiceRec.resx">
++      <DependentUpon>diaVoiceRec.cs</DependentUpon>
++    </EmbeddedResource>
+     <None Include="packages.config" />
+     <None Include="Properties\Settings.settings">
+       <Generator>SettingsSingleFileGenerator</Generator>
+diff --git a/MiniForms/ModuleLoader/HardCodeLoader.cs b/MiniForms/ModuleLoader/HardCodeLoader.cs
+--- a/MiniForms/ModuleLoader/HardCodeLoader.cs
++++ b/MiniForms/ModuleLoader/HardCodeLoader.cs
+@@ -6,6 +6,7 @@
+ using MiniForms.Modules.FileOut;
+ using MiniForms.Modules.QRcode;
+ using MiniForms.Modules.StringReplacer;
++using MiniForms.VoiceRec;
+ 
+ namespace MiniForms.ModuleLoader
+ {
+@@ -18,6 +19,7 @@
+             yield return new ModuleDetail("String Replacer", typeof(StringReplacer));
+             yield return new ModuleDetail("Email", typeof(Email));
+             yield return new ModuleDetail("QRcode Converter", typeof(QRcode));
++            yield return new ModuleDetail("Voice REC", typeof(VoiceRecognition));
+         }
+     }
+ }
+diff --git a/MiniForms/Modules/QRcode/QRcode.cs b/MiniForms/Modules/QRcode/QRcode.cs
+--- a/MiniForms/Modules/QRcode/QRcode.cs
++++ b/MiniForms/Modules/QRcode/QRcode.cs
+@@ -15,6 +15,11 @@
+         public string Description { get; set; }
+         public string URL { get; set; }
+ 
++        public QRcode(string name)
++        {
++            Name = "QRcode";
++        }
++
+         public void EditModule()
+         {
+             diaQRcode qr = new diaQRcode();
+diff --git a/MiniForms/Modules/Qrcode/QrCodeModule.cs b/MiniForms/Modules/Qrcode/QrCodeModule.cs
+deleted file mode 100644
+--- a/MiniForms/Modules/Qrcode/QrCodeModule.cs
++++ /dev/null
+@@ -1,12 +0,0 @@
+-﻿using System;
+-using System.Collections.Generic;
+-using System.Linq;
+-using System.Text;
+-using System.Threading.Tasks;
+-
+-namespace MiniForms.Modules.Qrcode
+-{
+-    class QrCodeModule
+-    {
+-    }
+-}
+diff --git a/MiniForms/VoiceRec/VoiceRecognition.cs b/MiniForms/VoiceRec/VoiceRecognition.cs
+new file mode 100644
+--- /dev/null
++++ b/MiniForms/VoiceRec/VoiceRecognition.cs
+@@ -0,0 +1,38 @@
++﻿using System;
++using System.Collections.Generic;
++using System.Linq;
++using System.Text;
++using System.Threading.Tasks;
++using System.Windows.Forms;
++using MiniForms.Interfaces;
++using MiniForms.Process;
++
++namespace MiniForms.VoiceRec
++{
++    class VoiceRecognition : IModule
++    {
++        public string Name { get; set; }
++        public string Description { get; set; }
++
++        public VoiceRecognition()
++        {
++            Name = "Voice REC";
++        }
++
++        public void EditModule()
++        {
++            diaVoiceRec v = new diaVoiceRec();
++            v.Show();     
++        }
++
++        public void Run(ProcessInstance instance)
++        {
++            throw new NotImplementedException();
++        }
++
++        public override string ToString()
++        {
++            return Name;
++        }
++    }
++}

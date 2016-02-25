@@ -1,0 +1,11 @@
+diff --git a/MiniForms/Modules/QRcode/diaQRcode.cs b/MiniForms/Modules/QRcode/diaQRcode.cs
+--- a/MiniForms/Modules/QRcode/diaQRcode.cs
++++ b/MiniForms/Modules/QRcode/diaQRcode.cs
+@@ -17,7 +17,6 @@
+     {
+         public string URL { get; set; }
+        
+-
+         public diaQRcode()
+         {
+             InitializeComponent();

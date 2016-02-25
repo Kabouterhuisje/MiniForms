@@ -1,0 +1,83 @@
+diff --git a/MiniForms/Modules/QRcode/diaQRcode.cs b/MiniForms/Modules/QRcode/diaQRcode.cs
+--- a/MiniForms/Modules/QRcode/diaQRcode.cs
++++ b/MiniForms/Modules/QRcode/diaQRcode.cs
+@@ -17,7 +17,6 @@
+     {
+         public string URL { get; set; }
+        
+-
+         public diaQRcode()
+         {
+             InitializeComponent();
+diff --git a/MiniForms/VoiceRec/diaVoiceRec.cs b/MiniForms/VoiceRec/diaVoiceRec.cs
+--- a/MiniForms/VoiceRec/diaVoiceRec.cs
++++ b/MiniForms/VoiceRec/diaVoiceRec.cs
+@@ -10,6 +10,7 @@
+ using System.Text;
+ using System.Threading.Tasks;
+ using System.Windows.Forms;
++using MiniForms.Properties;
+ 
+ namespace MiniForms.VoiceRec
+ {
+@@ -13,7 +14,7 @@
+ 
+ namespace MiniForms.VoiceRec
+ {
+-    public partial class diaVoiceRec : Form
++    public partial class DiaVoiceRec : Form
+     {
+         readonly SpeechRecognitionEngine _recognizer = new SpeechRecognitionEngine();
+         SpeechSynthesizer Monica = new SpeechSynthesizer();
+@@ -23,7 +24,7 @@
+         String greetChoice;
+         public bool StartSpeaking = false;
+ 
+-        public diaVoiceRec()
++        public DiaVoiceRec()
+         {
+             InitializeComponent();
+             _recognizer.SetInputToDefaultAudioDevice();
+@@ -34,8 +35,9 @@
+ 
+         private void ExportMode(object sender, SpeechRecognizedEventArgs e)
+         {
+-            var lines = File.ReadAllText(@"C:\Users\Dennis\Desktop\Output\test.txt");
+-            var tw = new StreamWriter(@"C:\Users\Dennis\Desktop\Output\test.txt");
++            var path = Settings.Default.DefaultOutputFolder;
++            var lines = File.ReadAllText(path + "test.txt");
++            var tw = new StreamWriter(path + "test.txt");
+             var input = e.Result.Text;
+             tw.WriteLine(lines + input);
+             Console.WriteLine(input);
+diff --git a/MiniForms/VoiceRec/diaVoiceRec.Designer.cs b/MiniForms/VoiceRec/diaVoiceRec.Designer.cs
+--- a/MiniForms/VoiceRec/diaVoiceRec.Designer.cs
++++ b/MiniForms/VoiceRec/diaVoiceRec.Designer.cs
+@@ -1,6 +1,6 @@
+ ﻿namespace MiniForms.VoiceRec
+ {
+-    partial class diaVoiceRec
++    partial class DiaVoiceRec
+     {
+         /// <summary>
+         /// Required designer variable.
+@@ -85,7 +85,7 @@
+             this.lbCommands.Size = new System.Drawing.Size(237, 329);
+             this.lbCommands.TabIndex = 4;
+             // 
+-            // diaVoiceRec
++            // DiaVoiceRec
+             // 
+             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+@@ -95,8 +95,8 @@
+             this.Controls.Add(this.btnStart);
+             this.Controls.Add(this.btnRead);
+             this.Controls.Add(this.txtInput);
+-            this.Name = "diaVoiceRec";
+-            this.Text = "diaVoiceRec";
++            this.Name = "DiaVoiceRec";
++            this.Text = "DiaVoiceRec";
+             this.ResumeLayout(false);
+             this.PerformLayout();
+ 

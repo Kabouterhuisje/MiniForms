@@ -1,0 +1,52 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+using MessagingToolkit.QRCode.Codec;
+using MessagingToolkit.QRCode.Codec.Data;
+
+namespace MiniForms.Modules.QRcode
+{
+
+    public partial class diaQRcode : Form
+    {
+        public string URL { get; set; }
+       
+
+        public diaQRcode()
+        {
+            InitializeComponent();
+        }
+
+        private void btnCreate_Click(object sender, EventArgs e)
+        {
+            string URL = txtURL.Text;
+            QRCodeEncoder encoder = new QRCodeEncoder();
+            Bitmap qrcode = encoder.Encode(URL);
+            pbQRcode.Image = (Image)qrcode;
+        }
+
+        private void btnSave_Click(object sender, EventArgs e)
+        {
+            if (txtURL.Text != "")
+            {                
+                var b = new Bitmap(pbQRcode.Image);
+                b.Save(@"C:\Users\Dennis\Desktop\Output\QRimage.jpg");
+            }
+            else
+            {
+                MessageBox.Show(@"Je hebt niets ingevuld!");
+            }
+        }
+
+        private void diaQRcode_Load(object sender, EventArgs e)
+        {
+            txtURL.Text = URL;
+        }
+    }
+}

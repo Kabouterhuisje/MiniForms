@@ -1,0 +1,25 @@
+﻿using System.Collections.Generic;
+using MiniForms.Interfaces;
+using MiniForms.Modules;
+using MiniForms.Modules.Email;
+using MiniForms.Modules.FileIn;
+using MiniForms.Modules.FileOut;
+using MiniForms.Modules.QRcode;
+using MiniForms.Modules.StringReplacer;
+using MiniForms.VoiceRec;
+
+namespace MiniForms.ModuleLoader
+{
+    class HardCodeLoader : IModuleLoader
+    {
+        public IEnumerable<IModuleDetail> GetModuleDetails()
+        {
+            yield return new ModuleDetail("File In", typeof(FileIn));
+            yield return new ModuleDetail("File Out", typeof(FileOut));
+            yield return new ModuleDetail("String Replacer", typeof(StringReplacer));
+            yield return new ModuleDetail("Email", typeof(Email));
+            yield return new ModuleDetail("QRcode Converter", typeof(QRcode));
+            yield return new ModuleDetail("Voice REC", typeof(VoiceRecognition));
+        }
+    }
+}

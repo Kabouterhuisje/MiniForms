@@ -1,0 +1,1 @@
+Deleted empty class and I made MiniForms even better / whitespace overload

@@ -1,0 +1,67 @@
+diff --git a/MiniForms.sln b/MiniForms.sln
+--- a/MiniForms.sln
++++ b/MiniForms.sln
+@@ -1,6 +1,6 @@
+ ﻿
+ Microsoft Visual Studio Solution File, Format Version 12.00
+ # Visual Studio 2013
+-VisualStudioVersion = 12.0.21005.1
++VisualStudioVersion = 12.0.31101.0
+ MinimumVisualStudioVersion = 10.0.40219.1
+ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MiniForms", "MiniForms\MiniForms.csproj", "{3D6E72FA-C55E-4338-93AB-48C252B08324}"
+@@ -5,4 +5,8 @@
+ MinimumVisualStudioVersion = 10.0.40219.1
+ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MiniForms", "MiniForms\MiniForms.csproj", "{3D6E72FA-C55E-4338-93AB-48C252B08324}"
++	GlobalSection(HgVSProperties) = preSolution
++		SolutionIsControlled = True
++		SolutionBindings = <Solution Location In Database>
++	EndGlobalSection
+ EndProject
+ Global
+@@ -7,5 +11,9 @@
+ EndProject
+ Global
++	GlobalSection(HgVSProperties) = preSolution
++		SolutionIsControlled = True
++		SolutionBindings = <Solution Location In Database>
++	EndGlobalSection
+ 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+ 		Debug|Any CPU = Debug|Any CPU
+ 		Release|Any CPU = Release|Any CPU
+diff --git a/MiniForms/MiniForms.csproj b/MiniForms/MiniForms.csproj
+--- a/MiniForms/MiniForms.csproj
++++ b/MiniForms/MiniForms.csproj
+@@ -32,6 +32,9 @@
+     <WarningLevel>4</WarningLevel>
+   </PropertyGroup>
+   <ItemGroup>
++    <Reference Include="MessagingToolkit.QRCode">
++      <HintPath>..\packages\MessagingToolkit.QRCode.1.3.0\lib\MessagingToolkit.QRCode.dll</HintPath>
++    </Reference>
+     <Reference Include="nunit.framework">
+       <HintPath>..\packages\NUnit.3.0.1\lib\net45\nunit.framework.dll</HintPath>
+     </Reference>
+@@ -54,6 +57,13 @@
+     <Compile Include="Modules\FileIn\diaSelectFolder.Designer.cs">
+       <DependentUpon>diaSelectFolder.cs</DependentUpon>
+     </Compile>
++    <Compile Include="Modules\QRcode\diaQRcode.cs">
++      <SubType>Form</SubType>
++    </Compile>
++    <Compile Include="Modules\QRcode\diaQRcode.Designer.cs">
++      <DependentUpon>diaQRcode.cs</DependentUpon>
++    </Compile>
++    <Compile Include="Modules\QRcode\QRcode.cs" />
+     <Compile Include="Modules\StringReplacer\diaStringReplacer.cs">
+       <SubType>Form</SubType>
+     </Compile>
+@@ -82,6 +92,9 @@
+     <EmbeddedResource Include="Modules\FileIn\diaSelectFolder.resx">
+       <DependentUpon>diaSelectFolder.cs</DependentUpon>
+     </EmbeddedResource>
++    <EmbeddedResource Include="Modules\QRcode\diaQRcode.resx">
++      <DependentUpon>diaQRcode.cs</DependentUpon>
++    </EmbeddedResource>
+     <EmbeddedResource Include="Modules\StringReplacer\diaStringReplacer.resx">
+       <DependentUpon>diaStringReplacer.cs</DependentUpon>
+     </EmbeddedResource>

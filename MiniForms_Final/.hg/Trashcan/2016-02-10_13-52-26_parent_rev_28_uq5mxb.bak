@@ -1,0 +1,18 @@
+diff --git a/MiniForms.v12.suo b/MiniForms.v12.suo
+deleted file mode 100644
+index 4825cdb01a7460fdcd71841bcc4fda6f991a4f60..e69de29bb2d1d6434b8b29ae775ad8c2e48c5391
+GIT binary patch
+literal 0
+Hc$@<O00001
+
+diff --git a/MiniForms/MiniForms.csproj b/MiniForms/MiniForms.csproj
+--- a/MiniForms/MiniForms.csproj
++++ b/MiniForms/MiniForms.csproj
+@@ -54,6 +54,7 @@
+     <Compile Include="Modules\FileIn\diaSelectFolder.Designer.cs">
+       <DependentUpon>diaSelectFolder.cs</DependentUpon>
+     </Compile>
++    <Compile Include="Modules\Qrcode\QrCodeModule.cs" />
+     <Compile Include="Modules\StringReplacer\diaStringReplacer.cs">
+       <SubType>Form</SubType>
+     </Compile>

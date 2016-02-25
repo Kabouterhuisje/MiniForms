@@ -1,0 +1,183 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.IO;
+using System.Linq;
+using System.Speech.Recognition;
+using System.Speech.Synthesis;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+using MiniForms.Properties;
+
+namespace MiniForms.VoiceRec
+{
+    public partial class DiaVoiceRec : Form
+    {
+        readonly SpeechRecognitionEngine _recognizer = new SpeechRecognitionEngine();
+        SpeechSynthesizer Monica = new SpeechSynthesizer();
+        private DateTime _now = DateTime.Now;
+        readonly String userName = Environment.UserName;
+        readonly Random rnd = new Random();
+        String greetChoice;
+        public bool StartSpeaking = false;
+
+        public DiaVoiceRec()
+        {
+            InitializeComponent();
+            _recognizer.SetInputToDefaultAudioDevice();
+            _recognizer.LoadGrammar(new Grammar(new GrammarBuilder(new Choices(File.ReadAllLines(@"Commands.txt")))));
+            _recognizer.SpeechRecognized += (_recognizer_SpeechRecognized);
+            _recognizer.RecognizeAsync(RecognizeMode.Multiple);
+        }
+
+        private void ExportMode(object sender, SpeechRecognizedEventArgs e)
+        {
+            var path = Settings.Default.DefaultOutputFolder;
+            var lines = File.ReadAllText(path + "test.txt");
+            var tw = new StreamWriter(path + "test.txt");
+            var input = e.Result.Text;
+            tw.WriteLine(lines + input);
+            Console.WriteLine(input);
+            tw.Close();
+        }
+
+        private void _recognizer_SpeechRecognized(object sender, SpeechRecognizedEventArgs e)
+        {
+            if (e.Result.Text != "" && StartSpeaking == true)
+            {            
+                string time = _now.GetDateTimeFormats('t')[0];
+                string speech = e.Result.Text;
+                switch (speech)
+                {
+                    //BASIC COMMANDS
+                    case "Export":
+                        _recognizer.SpeechRecognized += (ExportMode);                      
+                        break;
+                    case "Process Stop":
+                        _recognizer.SpeechRecognized -= (ExportMode); 
+                        break;
+                    case "I hate you":
+                        Monica.Speak("Thats not very nice.. Leave me alone");
+                        break;
+                    case "Hello":
+                    case "Hello Monica":
+                        if (_now.Hour >= 5 && _now.Hour < 12)
+                        { Monica.Speak("Goodmorning " + userName + ", nice to see you again"); }
+                        if (_now.Hour >= 12 && _now.Hour < 18)
+                        { Monica.Speak("Good afternoon " + userName + ", nice to see you again"); }
+                        if (_now.Hour >= 18 && _now.Hour < 24)
+                        { Monica.Speak("Good evening " + userName + ", nice to see you again"); }
+                        if (_now.Hour < 5)
+                        { Monica.Speak("Hello, it is getting late " + userName); }
+                        StopREC();
+                        break;
+                    case "How are you":
+                        Monica.Speak("I'm fine, thanks for asking");
+                        StopREC();
+                        break;
+                    case "Goodbye":
+                    case "Close":
+                    case "Exit":
+                        Monica.Speak("Goodbye");
+                        Close();
+                        StopREC();
+                        break;
+                    case "Monica":
+                        var ranNum = rnd.Next(1, 3);
+                        if (ranNum == 1) { greetChoice = ""; Monica.Speak("Yes sir"); }
+                        else if (ranNum == 2) { greetChoice = ""; Monica.Speak("Yes?"); }
+                        StopREC();
+                        break;
+                    case "Thank you":
+                        Monica.Speak("No thanks");
+                        StopREC();
+                        break;
+
+                    //CONDITION OF DAY
+                    case "What time is it":
+                        Monica.Speak(time);
+                        StopREC();
+                        break;
+                    case "What day is it":
+                        Monica.Speak(DateTime.Today.ToString("dddd"));
+                        StopREC();
+                        break;
+                    case "Whats the date":
+                    case "Whats todays date":
+                        Monica.Speak(DateTime.Today.ToString("MM-dd-yyyy"));
+                        StopREC();
+                        break;
+
+                    //OTHER COMMANDS                
+                    case "Out of the way":
+                        if (WindowState == FormWindowState.Normal)
+                        {
+                            WindowState = FormWindowState.Minimized;
+                            Monica.Speak("My apologies");
+                        }
+                        StopREC();
+                        break;
+                    case "Come back":
+                        if (WindowState == FormWindowState.Minimized)
+                        {
+                            Monica.Speak("Alright?");
+                            WindowState = FormWindowState.Normal;
+                        }
+                        StopREC();
+                        break;
+                    case "Show commands":
+                        string[] commands = File.ReadAllLines("Commands.txt");
+                        Monica.Speak("Here they are");
+                        lbCommands.Items.Clear();
+                        lbCommands.SelectionMode = SelectionMode.None;
+                        lbCommands.Visible = true;
+                        foreach (string command in commands)
+                        {
+                            lbCommands.Items.Add(command);
+                        }
+                        StopREC();
+                        break;
+                    case "Hide commands":
+                        lbCommands.Visible = false;
+                        StopREC();
+                        break;                   
+                }
+            }
+        }
+
+        public void StopREC()
+        {
+            btnStop.Enabled = false;
+            btnStart.Enabled = true;
+            StartSpeaking = false;
+        }
+
+        private void btnRead_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(txtInput.Text))
+            {
+                Monica.SpeakAsync("Sorry,  I can't read without text, Enter text first");
+            }
+            else
+            {
+                Monica.Dispose();
+                Monica = new SpeechSynthesizer();
+                Monica.SpeakAsync(txtInput.Text); // print the text in text box
+            }
+        }
+
+        private void btnStart_Click(object sender, EventArgs e)
+        {
+            btnStart.Enabled = false;
+            StartSpeaking = true;
+        }
+
+        private void btnStop_Click(object sender, EventArgs e)
+        {
+            StopREC();
+        }
+    }
+}

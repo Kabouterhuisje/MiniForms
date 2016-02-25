@@ -1,0 +1,38 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+using MiniForms.Interfaces;
+using MiniForms.Process;
+
+namespace MiniForms.VoiceRec
+{
+    class VoiceRecognition : IModule
+    {
+        public string Name { get; set; }
+        public string Description { get; set; }
+
+        public VoiceRecognition()
+        {
+            Name = "Voice REC";
+        }
+
+        public void EditModule()
+        {
+            diaVoiceRec v = new diaVoiceRec();
+            v.Show();     
+        }
+
+        public void Run(ProcessInstance instance)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override string ToString()
+        {
+            return Name;
+        }
+    }
+}

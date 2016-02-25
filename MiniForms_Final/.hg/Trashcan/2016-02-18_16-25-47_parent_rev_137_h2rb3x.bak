@@ -1,0 +1,17 @@
+diff --git a/MiniForms/Modules/Qrcode/QrCodeModule.cs b/MiniForms/Modules/Qrcode/QrCodeModule.cs
+deleted file mode 100644
+--- a/MiniForms/Modules/Qrcode/QrCodeModule.cs
++++ /dev/null
+@@ -1,12 +0,0 @@
+-﻿using System;
+-using System.Collections.Generic;
+-using System.Linq;
+-using System.Text;
+-using System.Threading.Tasks;
+-
+-namespace MiniForms.Modules.Qrcode
+-{
+-    class QrCodeModule
+-    {
+-    }
+-}
